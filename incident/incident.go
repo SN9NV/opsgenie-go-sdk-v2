@@ -2,6 +2,7 @@ package incident
 
 import (
 	"context"
+
 	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
 )
 
@@ -168,4 +169,10 @@ func (c *Client) ListNotes(context context.Context, request *ListNotesRequest) (
 		return nil, err
 	}
 	return result, nil
+}
+
+func (c *Client) Timeline(context context.Context, request *ListTimelineRequest) (*ListTimelineResult, error) {
+	result := &ListTimelineResult{}
+	err := c.client.Exec(context, request, result)
+	return result, err
 }

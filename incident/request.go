@@ -678,6 +678,77 @@ func (r *ListLogsRequest) RequestParams() map[string]string {
 	return params
 }
 
+// TimelineGroup group parameter for timeline
+type TimelineGroup string
+
+// TimelineGroup constants
+var (
+	TimelineGroupCustom              TimelineGroup = "custom"
+	TimelineGroupIncident                          = "incident"
+	TimelineGroupResponderAlert                    = "responderAlert"
+	TimelineGroupStakeholderUpdate                 = "stakeholderUpdate"
+	TimelineGroupStatusPage                        = "statusPage"
+	TimelineGroupICCSessionLifecycle               = "iccSessionLifecycle"
+	TimelineGroupICCSessionDetails                 = "iccSessionDetails"
+	TimelineGroupIntegration                       = "integration"
+)
+
+// ListTimelineRequest reqpest parameters for ListTimeline endpoint
+type ListTimelineRequest struct {
+	client.BaseRequest
+	IncidentID    string
+	Groups        []TimelineGroup
+	DiscardHidden bool
+	Offset        int
+	Order         Order
+	Limit         int
+}
+
+func (r *ListTimelineRequest) Validate() error {
+	if r.IncidentID == "" {
+		return errors.New("incident ID cannot be blank")
+	}
+	if r.Limit < 0 || r.Limit > 20 {
+		return errors.New("limit not between 1 and 20. 0 will use the default, 20")
+	}
+	return nil
+}
+
+func (r *ListTimelineRequest) ResourcePath() string {
+	return "/v2/incident-timelines/" + r.IncidentID + "/entries"
+}
+
+func (r *ListTimelineRequest) Method() string {
+	return http.MethodGet
+}
+
+func joinTimelineGroups(groups []TimelineGroup) string {
+	outStrings := make([]string, 0, len(groups))
+	for _, group := range groups {
+		outStrings = append(outStrings, string(group))
+	}
+	return strings.Join(outStrings, ",")
+}
+
+func (r *ListTimelineRequest) RequestParams() (params map[string]string) {
+	if len(r.Groups) != 0 {
+		params["group"] = joinTimelineGroups(r.Groups)
+	}
+	if r.DiscardHidden {
+		params["discardHidden"] = "true"
+	}
+	if r.Offset != 0 {
+		params["offset"] = strconv.Itoa(r.Offset)
+	}
+	if r.Order != "" {
+		params["order"] = string(r.Order)
+	}
+	if r.Limit != 0 {
+		params["limit"] = strconv.Itoa(r.Limit)
+	}
+	return
+}
+
 type ListNotesRequest struct {
 	client.BaseRequest
 	Identifier IdentifierType

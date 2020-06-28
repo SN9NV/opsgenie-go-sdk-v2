@@ -1,8 +1,9 @@
 package incident
 
 import (
-	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
 	"time"
+
+	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
 )
 
 type Incident struct {
@@ -72,6 +73,36 @@ type ListNotesResult struct {
 	client.ResultMetadata
 	Notes  []NoteResult `json:"data"`
 	Paging Paging       `json:"paging"`
+}
+
+type Actor struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+type TimelineEntry struct {
+	ID          string    `json:"id"`
+	Group       string    `json:"group"`
+	Type        string    `json:"type"`
+	EventTime   time.Time `json:"eventTime"`
+	Hidden      bool      `json:"hidden"`
+	Actor       Actor     `json:"actor"`
+	Description struct {
+		Name string `json:"name"`
+		Type string `json:"type"`
+	} `json:"description"`
+	LastEdit struct {
+		EditTime time.Time `json:"editTime"`
+		Actor    Actor     `json:"actor"`
+	} `json:"lastEdit"`
+}
+
+type ListTimelineResult struct {
+	client.ResultMetadata
+	Data struct {
+		Entries    []TimelineEntry `json:"entries"`
+		NextOffset string          `json:"nextOffset"`
+	}
 }
 
 type Paging struct {
