@@ -1,9 +1,10 @@
 package incident
 
 import (
+	"testing"
+
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestGetRequestStatus_Validate(t *testing.T) {
@@ -79,7 +80,7 @@ func TestGetRequest_Endpoint(t *testing.T) {
 func TestListRequest_Validate(t *testing.T) {
 	request := &ListRequest{}
 	err := request.Validate()
-	assert.Equal(t, err.Error(), errors.New("Query field cannot be empty.").Error())
+	assert.Equal(t, err, nil)
 	request.Query = "status:open"
 	err = request.Validate()
 	assert.Nil(t, err)

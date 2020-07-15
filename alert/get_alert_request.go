@@ -3,7 +3,7 @@ package alert
 import (
 	"net/http"
 
-	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
+	"github.com/SN9NV/opsgenie-go-sdk-v2/client"
 )
 
 type GetAlertRequest struct {

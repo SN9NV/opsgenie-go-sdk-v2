@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
+	"github.com/SN9NV/opsgenie-go-sdk-v2/client"
 )
 
 type CreateDeploymentRequest struct {

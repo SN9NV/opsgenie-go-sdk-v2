@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
+	"github.com/SN9NV/opsgenie-go-sdk-v2/client"
 	"github.com/pkg/errors"
 )
 
@@ -159,9 +159,6 @@ type ListRequest struct {
 }
 
 func (r *ListRequest) Validate() error {
-	if r.Query == "" {
-		return errors.New("Query field cannot be empty.")
-	}
 	return nil
 }
 

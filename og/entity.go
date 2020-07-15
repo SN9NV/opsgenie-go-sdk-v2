@@ -1,8 +1,8 @@
 package og
 
 import (
-	"github.com/opsgenie/opsgenie-go-sdk-v2/alert"
-	"github.com/opsgenie/opsgenie-go-sdk-v2/client"
+	"github.com/SN9NV/opsgenie-go-sdk-v2/alert"
+	"github.com/SN9NV/opsgenie-go-sdk-v2/client"
 	"github.com/pkg/errors"
 	"time"
 )
